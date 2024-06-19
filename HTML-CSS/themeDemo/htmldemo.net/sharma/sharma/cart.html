@@ -83,12 +83,17 @@
                             <ul class="menu-nav">
                                 <li>
                                     <div class="dropdown">
-                                        <button type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-myaccount ion-android-person"></i> <span>My Account</span> <i class="ion-ios-arrow-down"></i></button>
-
+                                        <button type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="icon-myaccount ion-android-person"></i> 
+                                            <span id="userNameDisplay">My Account</span> 
+                                            <i class="ion-ios-arrow-down"></i>
+                                        </button>
                                         <ul class="dropdown-menu animation slideDownIn" aria-labelledby="dropdownMenuButton">
-                                            <li><a href="login.html">Register</a></li>
-                                            <li><a href="login.html">Login</a></li>
-                                        </ul>
+                                            <li id="adminLinkLi" style="display: none;"><a id="adminLink" href="#">ADMIN Controller</a></li>
+                                            <li id="registerLink" style="display: none;"><a href="login.html">Register</a></li>
+                                            <li id="loginLink" style="display: none;"><a href="login.html">Login</a></li>
+                                            <li><a href="#" id="logoutLink" style="display: none;">Logout</a></li>
+                                          </ul>
                                     </div>
                                 </li>
                                 <li class="pr-0">
@@ -1025,6 +1030,7 @@
                                                 <a href="#"><i class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
+                                            
                                         <tr>
                                             <td class="product-thumbnail">
                                                 <a  href="#"><img class="img-responsive" src="assets/images/product-image/3.jpg" alt="" /></a>
@@ -1310,6 +1316,45 @@
 
         <!-- Main Activation JS -->
         <script src="assets/js/main.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+            
+                var urlsToRemove = [
+                  "shop-4-column.html",
+                  "shop-right-sidebar.html",
+                  "index-2.html",
+                  "index-3.html",
+                  "index-4.html",
+                  "shop-list-right-sidebar.html",
+                  "single-product.html",
+                  "single-product-affiliate.html",
+                  "single-product-group.html",
+                  "single-product-tabstyle-2.html",
+                  "single-product-tabstyle-3.html",
+                  "single-product-slider.html",
+                  "single-product-gallery-left.html",
+                  "single-product-gallery-right.html",
+                  "single-product-sticky-left.html",
+                  "single-product-sticky-right.html",
+                ];
+            
+                
+                var tagsToSearch = ["li", "div", "span", "p"];
+                
+                // Duyệt qua từng loại thẻ
+                tagsToSearch.forEach(function(tag) {
+                  urlsToRemove.forEach(function(url) {
+                    var elementsToRemove = document.querySelectorAll(tag + " > a[href='" + url + "']");
+                    elementsToRemove.forEach(function(element) {
+                      element.parentNode.parentNode.removeChild(element.parentNode);
+                    })
+                  })
+                });
+            });
+            </script>
+
+        <script src="assets/js/userAuth.js"></script>
     </body>
 
 <!-- Mirrored from htmldemo.net/sharma/sharma/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Mar 2024 20:40:55 GMT -->

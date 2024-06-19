@@ -6,10 +6,11 @@ $(document).ready(function () {
     var username = $('#usernameLogin').val()
     var password = $('#passwordLogin').val()
 
-    var formData = {
-      username: username,
-      password: password
-    };
+    if (username && password) {
+      var formData = {
+          username: username,
+          password: password
+      };
 
     $.ajax({
       method: "POST",
@@ -18,9 +19,11 @@ $(document).ready(function () {
       contentType: "application/json; charset=utf-8",
     })
       .done(function (response, textStatus, xhr) {
+        
         var token = xhr.getResponseHeader('Authorization');
         var role = xhr.getResponseHeader('Role');
         var rememberMe = $('#rememberMe').prop('checked');
+
         if (rememberMe) {
           localStorage.setItem('username', formData.username);
           localStorage.setItem('token', token);
@@ -30,13 +33,22 @@ $(document).ready(function () {
           sessionStorage.setItem('token', token);
           sessionStorage.setItem('role', role);
         }
-        console.log("Login Success");
+        
         window.location.href = "index.html";
       })
       .fail(function (xhr, status, error) {
         // Xử lý khi có lỗi trong quá trình gửi yêu cầu AJAX
         console.error("Lỗi khi gửi yêu cầu AJAX:", error);
+        if (xhr.status === 401) {
+          alert("Đăng nhập thất bại: " + xhr.responseJSON.message);
+        } else {
+            alert("Đăng nhập thất bại.");
+        }
       })
+    }else{
+      alert("Bạn chưa điền thông tin đăng nhập.");
+      window.location.href = "login.html";
+    }
 
   })
 
@@ -51,6 +63,7 @@ $(document).ready(function () {
 
     console.log("Email trước khi gửi:", email);
 
+    if(email && password && firstname && lastname && phone){
     var formData = {
       email: email,
       password: password,
@@ -86,6 +99,10 @@ $(document).ready(function () {
           alert("Tạo tài khoản thất bại");
         }
       })
+    }else{
+      alert("Bạn chưa điền thông tin đăng ký.");
+      window.location.href = "login.html";
+    }
 
   })
   

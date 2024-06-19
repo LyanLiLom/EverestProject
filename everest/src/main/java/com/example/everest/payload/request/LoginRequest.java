@@ -9,7 +9,7 @@ public class LoginRequest {
     @Min(value = 3,message = "Password không được ít hơn 3 kí tự")
     private String password;
 
-    // Getters và setters
+
     public String getUsername() {
         return username;
     }

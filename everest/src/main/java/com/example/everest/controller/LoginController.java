@@ -34,12 +34,20 @@ public class LoginController {
         String password = loginRequest.getPassword();
         try {
             String token = loginServiceImp.checkLogin(email, password, response);
-            BaseResponse baseResponse = new BaseResponse();
-            baseResponse.setStatusCode(HttpStatus.OK.value());
-            baseResponse.setMessage("Login Success");
-            baseResponse.setData(token);
+            System.out.println(token);
+            if (!token.equals("")) {
+                BaseResponse baseResponse = new BaseResponse();
+                baseResponse.setStatusCode(HttpStatus.OK.value());
+                baseResponse.setMessage("Login Success");
+                baseResponse.setData(token);
 
-            return ResponseEntity.ok(baseResponse);
+                return ResponseEntity.ok(baseResponse);
+            } else {
+                BaseResponse baseResponse = new BaseResponse();
+                baseResponse.setStatusCode(HttpStatus.UNAUTHORIZED.value());
+                baseResponse.setMessage("Login Failed: Invalid email or password");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(baseResponse);
+            }
         }  catch (RuntimeException e){
             BaseResponse baseResponse = new BaseResponse();
             baseResponse.setStatusCode(HttpStatus.UNAUTHORIZED.value());
@@ -50,6 +58,8 @@ public class LoginController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest){
+
+
         try {
             boolean isRegistered = loginServiceImp.checkRegister(registerRequest.getEmail(),
                     registerRequest.getPassword(),
