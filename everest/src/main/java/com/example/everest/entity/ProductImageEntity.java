@@ -11,8 +11,7 @@ public class ProductImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "img_url")
-    private String imgUrl;
+
     @Column(name = "img_name")
     private String imgName;
 
@@ -25,14 +24,6 @@ public class ProductImageEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
     }
 
     public String getImgName() {

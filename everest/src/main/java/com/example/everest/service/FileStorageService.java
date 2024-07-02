@@ -1,5 +1,6 @@
 package com.example.everest.service;
 
+import com.example.everest.service.imp.FileStorageServiceImp;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -13,7 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 @Service
-public class FileStorageService {
+public class FileStorageService implements FileStorageServiceImp {
     @Value("${upload.file.path}")
     private String uploadDirectory;
 

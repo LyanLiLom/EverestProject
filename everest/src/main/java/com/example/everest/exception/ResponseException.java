@@ -20,7 +20,7 @@ public class ResponseException {
         baseRespond.setStatusCode(500);
         baseRespond.setMessage(e.getMessage());
         baseRespond.setData("");
-        return new ResponseEntity<>(baseRespond, HttpStatus.OK);
+        return new ResponseEntity<>(baseRespond, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
@@ -38,7 +38,7 @@ public class ResponseException {
         baseRespond.setMessage("");
         baseRespond.setData(errors);
 
-        return new ResponseEntity<>(baseRespond, HttpStatus.OK);
+        return new ResponseEntity<>(baseRespond, HttpStatus.BAD_REQUEST);
     }
 }
 

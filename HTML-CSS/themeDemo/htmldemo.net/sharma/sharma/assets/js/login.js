@@ -93,10 +93,10 @@ $(document).ready(function () {
         // Xử lý khi có lỗi trong quá trình gửi yêu cầu AJAX
         console.error("Lỗi khi gửi yêu cầu AJAX:", error);
 
-        if (xhr.status === 400) {
+        if (xhr.status === 409) {
           alert("Tạo tài khoản thất bại: Trùng lặp tài khoản");
         } else {
-          alert("Tạo tài khoản thất bại");
+          alert("Tạo tài khoản thất bại, điều kiện tạo chưa hợp lệ!!!");
         }
       })
     }else{

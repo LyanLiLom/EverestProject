@@ -45,7 +45,7 @@ $(document).ready(function(){
     $('#adminLink').click(function (e) {
         e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ a
         if (role === "ROLE_ADMIN") {
-            window.location.href = "loginController.html";
+            window.location.href = "AdminController.html";
         } else {
             alert('Bạn không có quyền truy cập vào trang này.'); // Thông báo không có quyền
         }
