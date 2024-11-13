@@ -1,23 +1,16 @@
 package com.example.everest.controller;
 
 import com.example.everest.dto.ProductDTO;
-import com.example.everest.entity.ProductEntity;
 import com.example.everest.payload.request.ProductRequest;
 import com.example.everest.payload.response.BaseResponse;
 import com.example.everest.service.ProductImageService;
-import com.example.everest.service.imp.ProductImageServiceImp;
-import com.example.everest.utils.JWTUtils;
-import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,16 +18,16 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
-    private ProductImageServiceImp productImageServiceImp;
+    private ProductImageService productImageService;
 
 
 
-    @PostMapping("/table")
+    @GetMapping("/table")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> tableProductForAdmin(@RequestHeader(name = "Authorization") String token){
         try {
             String role = "{\"name\":\"ROLE_ADMIN\"}";
-            List<ProductDTO> list = productImageServiceImp.getAllProduct(token,role);
+            List<ProductDTO> list = productImageService.getAllProduct(token,role);
             BaseResponse baseResponse = new BaseResponse();
             if (!list.isEmpty()) {
                 baseResponse.setStatusCode(200);
@@ -57,7 +50,7 @@ public class ProductController {
     public ResponseEntity<?> insertProductForAdmin(@Valid @ModelAttribute ProductRequest productRequest){
 
         try {
-            productImageServiceImp.insertProduct(productRequest);
+            productImageService.insertProduct(productRequest);
             return new ResponseEntity<>("Product inserted successfully", HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -68,10 +61,26 @@ public class ProductController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> updateProductForAdmin(@Valid @ModelAttribute ProductRequest productRequest){
         try {
-            productImageServiceImp.updateProduct(productRequest);
-            return new ResponseEntity<>("Product updated successfully", HttpStatus.UPGRADE_REQUIRED);
+            productImageService.updateProduct(productRequest);
+            System.out.println("ID: " + productRequest.getId());
+            System.out.println("Product Name: " + productRequest.getProductName());
+            System.out.println("Old Price: " + productRequest.getOldPrice());
+            System.out.println("New Price: " + productRequest.getNewPrice());
+            System.out.println("SKU: " + productRequest.getSku());
+            System.out.println("Description: " + productRequest.getDescription());
+            System.out.println("Information: " + productRequest.getInformation());
+            System.out.println("MultipartFile: " + productRequest.getMultipartFile().getOriginalFilename());
+
+            return new ResponseEntity<>("Product updated successfully", HttpStatus.OK);
         }catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> deleteProductForAdmin(@PathVariable int id){
+        productImageService.deleteProduct(id);
+        return ResponseEntity.ok("Product delete successfully");
     }
 }

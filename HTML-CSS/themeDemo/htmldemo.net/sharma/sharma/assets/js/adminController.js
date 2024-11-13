@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-    $('#productTable').submit(function (event) {
-  
+    $('#productForm').submit(function (event) {
       event.preventDefault();
+
       var token = localStorage.getItem('token') || sessionStorage.getItem('token')
   
       var formData = {
@@ -10,19 +10,20 @@ $(document).ready(function () {
       };
   
       $.ajax({
-        method: "POST",
-        url: "http://localhost:6601/login",
-        data: JSON.stringify(formData),
-        contentType: "application/json; charset=utf-8",
-      })
-        .done(function (response, textStatus, xhr) {
-          
-          window.location.href = "index.html";
-        })
-        .fail(function (xhr, status, error) {
-          // Xử lý khi có lỗi trong quá trình gửi yêu cầu AJAX
-          console.error("Lỗi khi gửi yêu cầu AJAX:", error);
-        })
+        method: "GET",
+        url: "http://localhost:6601/product/table",
+        data: formData,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        },
+        success: function (response, textStatus, xhr) {
+            sessionStorage.setItem('productList', JSON.stringify(response.data));
+            window.location.href = "productAdmin.html";
+        },
+        error: function (xhr, status, error) {
+            console.error("Lỗi khi gửi yêu cầu AJAX:", error);
+        }
+    });
   
     })
 })

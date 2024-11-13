@@ -18,7 +18,7 @@ public class ProductEntity {
     @Column(name = "information")
     private String information;
     @Column(name = "sku")
-    private int sku;
+    private long sku;
 
     @ManyToOne
     @JoinColumn(name = "id_image")
@@ -72,11 +72,11 @@ public class ProductEntity {
         this.information = information;
     }
 
-    public int getSku() {
+    public long getSku() {
         return sku;
     }
 
-    public void setSku(int sku) {
+    public void setSku(long sku) {
         this.sku = sku;
     }
 

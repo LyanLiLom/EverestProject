@@ -4,7 +4,7 @@ import com.example.everest.exception.InsertException;
 import com.example.everest.payload.request.LoginRequest;
 import com.example.everest.payload.request.RegisterRequest;
 import com.example.everest.payload.response.BaseResponse;
-import com.example.everest.service.imp.LoginServiceImp;
+import com.example.everest.service.LoginService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class LoginController {
 
     @Autowired
-    private LoginServiceImp loginServiceImp;
+    private LoginService loginService;
     @PostMapping
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
 
@@ -33,7 +33,7 @@ public class LoginController {
         String email = loginRequest.getUsername();
         String password = loginRequest.getPassword();
         try {
-            String token = loginServiceImp.checkLogin(email, password, response);
+            String token = loginService.checkLogin(email, password, response);
             System.out.println(token);
             if (!token.equals("")) {
                 BaseResponse baseResponse = new BaseResponse();
@@ -61,7 +61,7 @@ public class LoginController {
 
 
         try {
-            boolean isRegistered = loginServiceImp.checkRegister(registerRequest.getEmail(),
+            boolean isRegistered = loginService.checkRegister(registerRequest.getEmail(),
                     registerRequest.getPassword(),
                     registerRequest.getFirstname(),
                     registerRequest.getLastname(),

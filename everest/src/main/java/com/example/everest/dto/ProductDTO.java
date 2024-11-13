@@ -9,13 +9,13 @@ public class ProductDTO implements Serializable {
     private double giaMoi;
     private String moTa;
     private String thongTinSp;
-    private int tonKho;
+    private long tonKho;
     private String imageUrl;
 
     public ProductDTO() {
     }
 
-    public ProductDTO(int id,String tenSp, double giaCu, double giaMoi, String moTa, String thongTinSp, int tonKho, String imageUrl) {
+    public ProductDTO(int id,String tenSp, double giaCu, double giaMoi, String moTa, String thongTinSp, long tonKho, String imageUrl) {
         this.tenSp = tenSp;
         this.giaCu = giaCu;
         this.giaMoi = giaMoi;
@@ -65,11 +65,11 @@ public class ProductDTO implements Serializable {
         this.thongTinSp = thongTinSp;
     }
 
-    public int getTonKho() {
+    public long getTonKho() {
         return tonKho;
     }
 
-    public void setTonKho(int tonKho) {
+    public void setTonKho(long tonKho) {
         this.tonKho = tonKho;
     }
 

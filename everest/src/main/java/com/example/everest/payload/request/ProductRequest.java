@@ -20,13 +20,12 @@ public class ProductRequest {
     @DecimalMin(value = "0.0", inclusive = false, message = "Giá mới phải lớn hơn 0")
     private double newPrice;
 
-    @NotBlank(message = "Mô tả sản phẩm không được để trống.")
     private String description;
 
     private String information;
 
     @Min(value = 1, message = "SKU phải là một số nguyên dương.")
-    private int sku;
+    private long sku;
 
     public ProductRequest() {
     }
@@ -71,11 +70,11 @@ public class ProductRequest {
         this.information = information;
     }
 
-    public int getSku() {
+    public long getSku() {
         return sku;
     }
 
-    public void setSku(int sku) {
+    public void setSku(long sku) {
         this.sku = sku;
     }
 
