@@ -15,31 +15,29 @@ import java.util.Map;
 @ControllerAdvice
 public class ResponseException {
     @ExceptionHandler(value = {RuntimeException.class})
-    public ResponseEntity<?> handleException(Exception e){
-        BaseResponse baseRespond = new BaseResponse();
-        baseRespond.setStatusCode(500);
-        baseRespond.setMessage(e.getMessage());
-        baseRespond.setData("");
-        return new ResponseEntity<>(baseRespond, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<?> handleRuntimeException(RuntimeException e) {
+        return buildResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, "");
     }
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public ResponseEntity<?> handValidException(MethodArgumentNotValidException e){
-        Map<String,String> errors = new HashMap<>();
-
+    public ResponseEntity<?> handleValidException(MethodArgumentNotValidException e) {
+        Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors().forEach(item -> {
             String field = ((FieldError) item).getField();
             String message = item.getDefaultMessage();
-            errors.put(field,message);
+            errors.put(field, message);
         });
-
-        BaseResponse baseRespond = new BaseResponse();
-        baseRespond.setStatusCode(400);
-        baseRespond.setMessage("");
-        baseRespond.setData(errors);
-
-        return new ResponseEntity<>(baseRespond, HttpStatus.BAD_REQUEST);
+        return buildResponse("Validation failed", HttpStatus.BAD_REQUEST, errors);
     }
+
+    private ResponseEntity<BaseResponse> buildResponse(String message, HttpStatus status, Object data) {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(status.value());
+        baseResponse.setMessage(message);
+        baseResponse.setData(data);
+        return new ResponseEntity<>(baseResponse, status);
+    }
+
 }
 
 

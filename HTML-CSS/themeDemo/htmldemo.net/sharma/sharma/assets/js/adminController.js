@@ -11,7 +11,7 @@ $(document).ready(function () {
   
       $.ajax({
         method: "GET",
-        url: "http://localhost:6601/product/table",
+        url: "https://localhost:6601/product/table",
         data: formData,
         beforeSend: function (xhr) {
             xhr.setRequestHeader('Authorization', 'Bearer ' + token);

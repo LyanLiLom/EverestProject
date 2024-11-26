@@ -88,7 +88,7 @@ $(document).ready(function () {
         // Gửi yêu cầu AJAX xóa sản phẩm
         $.ajax({
             method: "DELETE",
-            url: "http://localhost:6601/product/delete/" + productId,  // Đảm bảo URL đúng
+            url: "https://localhost:6601/product/delete/" + productId,  // Đảm bảo URL đúng
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);  // Thêm header Authorization
             },

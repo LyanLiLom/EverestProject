@@ -20,8 +20,10 @@ public class ProductRequest {
     @DecimalMin(value = "0.0", inclusive = false, message = "Giá mới phải lớn hơn 0")
     private double newPrice;
 
+    @NotNull(message = "Mô tả không được để trống")
     private String description;
 
+    @NotNull(message = "Thông tin không được để trống")
     private String information;
 
     @Min(value = 1, message = "SKU phải là một số nguyên dương.")

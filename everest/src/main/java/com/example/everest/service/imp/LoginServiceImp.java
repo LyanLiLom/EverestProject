@@ -1,7 +1,6 @@
 package com.example.everest.service.imp;
 
 import com.example.everest.entity.UserEntity;
-import com.example.everest.exception.InsertException;
 import com.example.everest.payload.response.RoleResponse;
 import com.example.everest.repository.UserRepository;
 import com.example.everest.utils.JWTUtils;
@@ -54,6 +53,7 @@ public class LoginServiceImp implements com.example.everest.service.LoginService
     public boolean isEmailExists(String email){
         return userRepository.existsByEmail(email);
     }
+
     @Override
     public boolean checkRegister(String email, String password,
                                  String firstname, String lastname, String phone) {
@@ -74,8 +74,8 @@ public class LoginServiceImp implements com.example.everest.service.LoginService
             if (savedUser.getId() != 0) {
                 return true;
             }
-        }catch(Exception e){
-            throw new InsertException("Lỗi " + e.getMessage());
+        }catch(RuntimeException e){
+            throw new RuntimeException("Lỗi " + e.getMessage());
         }
         return false;
     }

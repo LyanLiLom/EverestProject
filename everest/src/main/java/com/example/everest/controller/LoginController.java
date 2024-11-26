@@ -1,6 +1,5 @@
 package com.example.everest.controller;
 
-import com.example.everest.exception.InsertException;
 import com.example.everest.payload.request.LoginRequest;
 import com.example.everest.payload.request.RegisterRequest;
 import com.example.everest.payload.response.BaseResponse;
@@ -67,15 +66,13 @@ public class LoginController {
                     registerRequest.getLastname(),
                     registerRequest.getPhone());
             System.out.println(isRegistered);
-            if (isRegistered == true) {
+            if (isRegistered) {
                 return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>("User registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (InsertException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

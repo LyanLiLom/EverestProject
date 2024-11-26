@@ -1,7 +1,15 @@
 package com.example.everest.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.sql.Timestamp;
+
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity(name = "users")
 public class UserEntity {
     @Id
@@ -19,60 +27,27 @@ public class UserEntity {
     private String phone;
     @Column(name="role_user")
     private String role;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    @Column(name = "created_at", updatable = false)
+    private Timestamp createdAt;
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
-    public int getId() {
-        return id;
+    @PrePersist
+    protected void onCreate(){
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        this.createdAt = now;
+        this.updatedAt = now;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @PreUpdate
+    protected void onUpdate(){
+        this.updatedAt = new Timestamp(System.currentTimeMillis());
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public enum Status{
+        ACTIVE,
+        LOCKED
     }
 }

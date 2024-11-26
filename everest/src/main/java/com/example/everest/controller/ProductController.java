@@ -20,8 +20,6 @@ public class ProductController {
     @Autowired
     private ProductImageService productImageService;
 
-
-
     @GetMapping("/table")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> tableProductForAdmin(@RequestHeader(name = "Authorization") String token){

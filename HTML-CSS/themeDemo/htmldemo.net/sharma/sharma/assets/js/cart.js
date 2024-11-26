@@ -10,7 +10,7 @@ $('#myformLogin').submit(function(event){
   };
     var token = localStorage.getItem('token');
     $.ajax({
-        url: 'http://localhost:6601/test',
+        url: 'https://localhost:6601/test',
         type: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token

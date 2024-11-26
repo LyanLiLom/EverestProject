@@ -12,7 +12,7 @@ $('#insertProductForm').submit(function(event) {
     formData.append('multipartFile', $('#multipathFile')[0].files[0]);  // Sửa thành đúng ID file input
 
     $.ajax({
-        url: 'http://localhost:6601/product/insert',
+        url: 'https://localhost:6601/product/insert',
         method: 'POST',
         data: formData,
         processData: false,
@@ -25,17 +25,26 @@ $('#insertProductForm').submit(function(event) {
             alert("Thêm sản phẩm thành công!");
             console.log("Phản hồi từ server:", response);
             
-            // Lấy danh sách sản phẩm từ localStorage (hoặc sessionStorage)
-            let productList = JSON.parse(localStorage.getItem('productList') || '[]');
-        
-            // Thêm sản phẩm mới vào danh sách
-            productList.push(response.newProduct); // Giả sử server trả lại sản phẩm vừa thêm
-        
-            // Cập nhật lại vào localStorage (hoặc sessionStorage)
-            localStorage.setItem('productList', JSON.stringify(productList));
-        
-            // Cập nhật giao diện
-            window.location.href = "productAdmin.html"; // Chuyển hướng sang trang productAdmin
+            var token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+            $.ajax({
+                method: "GET",
+                url: "https://localhost:6601/product/table",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                },
+                success: function(response) {
+                    // Cập nhật lại danh sách sản phẩm vào sessionStorage
+                    sessionStorage.setItem('productList', JSON.stringify(response.data));
+    
+                    // Chuyển hướng về trang productAdmin.html
+                    window.location.href = "productAdmin.html";
+                },
+                error: function(xhr, status, error) {
+                    console.error("Lỗi khi lấy danh sách sản phẩm:", error);
+                    alert("Lỗi khi lấy danh sách sản phẩm!");
+                }
+            });
         },
         
         error: function(xhr, status, error) {

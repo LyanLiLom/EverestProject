@@ -14,7 +14,7 @@ $(document).ready(function () {
 
     $.ajax({
       method: "POST",
-      url: "http://localhost:6601/login",
+      url: "https://localhost:6601/login",
       data: JSON.stringify(formData),
       contentType: "application/json; charset=utf-8",
     })
@@ -76,7 +76,7 @@ $(document).ready(function () {
 
     $.ajax({
       method: "POST",
-      url: "http://localhost:6601/login/register",
+      url: "https://localhost:6601/login/register",
       data: JSON.stringify(formData),
       contentType: "application/json; charset=utf-8",
     })
