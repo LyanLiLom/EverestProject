@@ -4,15 +4,13 @@ import com.example.everest.payload.request.LoginRequest;
 import com.example.everest.payload.request.RegisterRequest;
 import com.example.everest.payload.response.BaseResponse;
 import com.example.everest.service.LoginService;
+import com.example.everest.service.PasswordValidationService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
@@ -20,6 +18,10 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private PasswordValidationService passwordValidationService;
+
+
     @PostMapping
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
 
@@ -76,5 +78,25 @@ public class LoginController {
         }
     }
 
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<?> forgotPassword(@RequestHeader(name = "email") String email,
+                                            @RequestHeader(name = "phone") String phone){
+        try {
+            loginService.checkEmailAndPhone(email, phone);
+            return ResponseEntity.ok("Email and phone were valid. OTP has been sent.");
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Authentication failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestHeader(name = "otp") String otp,
+                                           @RequestHeader(name = "newPassword") String newPassword){
+        if (!passwordValidationService.isValidPassword(newPassword)){
+            throw new RuntimeException("Password must be at least 8 characters long, contain a letter, a number, and a special character.");
+        }
+        loginService.resetPassword(otp,newPassword);
+        return ResponseEntity.ok("Reset Password successfully");
+    }
 
 }

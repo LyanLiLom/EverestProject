@@ -67,7 +67,7 @@ public class ProductImageServiceImp implements ProductImageService {
         productDTO.setMoTa(product.getDescription());
         productDTO.setThongTinSp(product.getInformation());
         productDTO.setTonKho(product.getSku());
-        productDTO.setImageUrl("http://localhost:6601/file/" + product.getProductImage().getImgName());
+        productDTO.setImageUrl("https://localhost:6601/file/" + product.getProductImage().getImgName());
         return productDTO;
     }
 

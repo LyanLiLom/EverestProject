@@ -1,0 +1,2 @@
+cmd:
+http-server -S -C D:/ProjectEVEREST/HTML-CSS/server.crt -K D:/ProjectEVEREST/HTML-CSS/server.key

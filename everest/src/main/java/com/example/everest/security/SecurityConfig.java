@@ -34,9 +34,9 @@ public class SecurityConfig {
 
                     author.requestMatchers(HttpMethod.POST,"/login/**").permitAll();
                     author.requestMatchers(HttpMethod.GET,"/file/**").permitAll();
-                    author.requestMatchers(HttpMethod.POST,"/product/**").permitAll();
                     author.requestMatchers(HttpMethod.GET,"/testAPI/**").permitAll();
                     author.requestMatchers(HttpMethod.POST,"/admin/**").permitAll();
+
                     author.anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)

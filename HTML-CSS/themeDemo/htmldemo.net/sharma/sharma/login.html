@@ -1002,16 +1002,36 @@
                                                 <input type="password" id="passwordLogin" name="password" placeholder="Password" />
                                                 <div class="button-box">
                                                     <div class="login-toggle-btn">
-                                                        <input type="checkbox"  id="rememberMe" name="rememberMe" value="on"/>
+                                                        <input type="checkbox" id="rememberMe" name="rememberMe" value="on" />
                                                         <a class="flote-none" href="javascript:void(0)">Remember me</a>
-                                                        <a href="#">Forgot Password?</a>
+                                                        <a href="javascript:void(0)" id="forgetPassword">Forgot Password?</a>
                                                     </div>
-                                                    <button  type="submit"><span>Login</span></button>
+                                                    <button type="submit"><span>Login</span></button>
                                                 </div>
                                             </form>
+                            
+                                            <div id="forgotPasswordForm" style="display: none; margin-top: 20px;">
+                                                <form id="forgotPasswordRequest" method="post">
+                                                    <input type="text" id="emailForgot" name="email" placeholder="Vui lòng nhập email bạn đã đăng ký." />
+                                                    <input type="text" id="phoneForgot" name="phone" placeholder="Vui lòng nhập phone bạn đã đăng ký." />
+                                                    <div class="button-box">
+                                                        <button type="submit"><span>Submit</span></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div id="otpForm" style="display: none; margin-top: 20px;">
+                                                <form id="otpVerification" method="post">
+                                                    <input type="text" id="otpCode" name="otp" placeholder="Enter OTP" required />
+                                                    <div class="button-box">
+                                                        <button type="submit"><span>Verify OTP</span></button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div id="lg2" class="tab-pane">
                                     <div class="login-form-container">
                                         <div class="login-register-form">
@@ -1021,8 +1041,8 @@
                                                 <input type="text" id="lastname" name="lastname" placeholder="LastName" />
                                                 <input type="password" id="passwordRegister" name="password" placeholder="Password" />
                                                 <input type="text" id="phone" name="phone-number" placeholder="Phone" />
-                                                <div class="button-box">
-                                                    <button type="submit"><span>Register</span></button>
+                                                <div class="button-box" style="display: flex; justify-content: center;align-items: center;">
+                                                    <button type="submit" style=><span>Register</span></button>
                                                 </div>
                                             </form>
                                         </div>

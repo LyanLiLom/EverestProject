@@ -14,4 +14,5 @@ public interface UserService {
     void updateUser(UserRequest userRequest);
     void deleteUser(int id);
     Page<UserDTO> getPageUser(int page, int size);
+
 }

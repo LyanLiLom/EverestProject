@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 public class LoginRequest {
     @NotBlank(message = "Username không được phép rỗng")
     private String username;
-    @Min(value = 3,message = "Password không được ít hơn 3 kí tự")
     private String password;
 
 

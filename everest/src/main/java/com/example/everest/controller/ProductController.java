@@ -6,6 +6,7 @@ import com.example.everest.payload.response.BaseResponse;
 import com.example.everest.service.ProductImageService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+
     @Autowired
     private ProductImageService productImageService;
 
